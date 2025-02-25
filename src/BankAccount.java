@@ -19,14 +19,32 @@ public class BankAccount {
         balance += amount;
     }
 
+//    public void withdraw(double amount) {
+//        if (amount <= 0) {
+//            throw new IllegalArgumentException("Withdrawal amount must be positive");
+//        }
+//        if (amount > balance) {
+//            throw new IllegalArgumentException("Insufficient balance");
+//        }
+//        balance -= amount;
+//    }
+
     public void withdraw(double amount) {
-        if (amount <= 0) {
+        if (amount > 0) {
+            double currentBalance = getBalance();
+            if (amount > currentBalance) {
+                throw new IllegalArgumentException("Insufficient balance");
+            }
+            if (amount > 10000) { // Added: max withdrawal limit
+                throw new IllegalArgumentException("Exceeds max withdrawal limit");
+            }
+            if (currentBalance - amount < 50) { // Added: minimum balance requirement
+                throw new IllegalArgumentException("Below minimum balance");
+            }
+            balance -= amount;
+        } else {
             throw new IllegalArgumentException("Withdrawal amount must be positive");
         }
-        if (amount > balance) {
-            throw new IllegalArgumentException("Insufficient balance");
-        }
-        balance -= amount;
     }
 
     public double getBalance() {
